@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ilotak</title>
+    <link rel="icon" href="ilotak_icon.png" type="image/png">
+    <style>
+        /* Основний фон сторінки */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: #fff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Стиль для контейнера відео */
+        .video-container {
+            max-width: 90%;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Стиль для відео */
+        video {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        /* Заголовок фільму */
+        .movie-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Сітка для відображення епізодів */
+        .episodes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        .episode {
+            background-color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .episode img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .episode:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .episode-title {
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .episode-description {
+            padding: 10px;
+            font-size: 14px;
+            text-align: center;
+            color: #ccc;
+        }
+
+        /* Стиль для кнопок */
+        .btn {
+            background-color: #e50914;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #f40612;
+        }
+
+        /* Языковий вибір */
+        .language-selector {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .language-selector button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            border-radius: 4px;
+        }
+
+        .language-selector button:hover {
+            background-color: #666;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Вибір мови -->
+    <div class="language-selector">
+        <button onclick="setLanguage('en')">English</button>
+        <button onclick="setLanguage('uk')">Українська</button>
+    </div>
+
+    <!-- Назва фільму -->
+    <div class="movie-title" id="movie-title">Squid Game</div>
+
+    <!-- Вибір відео/епізоду -->
+    <div class="video-container">
+        <video id="main-video" controls>
+            <source src="game in cancer sereal/first_epizode.mp4" type="video/mp4">
+            Ваш браузер не підтримує відтворення відео.
+        </video>
+    </div>
+
+    <!-- Список епізодів -->
+    <div class="episodes">
+        <div class="episode" onclick="changeVideo('game in cancer sereal/first_epizode.mp4', 'Епізод 1')" id="episode1">
+            <img src="https://via.placeholder.com/200x300.png?text=Episode+1" alt=" ">
+            <div class="episode-title" id="ep1-title">Епізод 1</div>
+            <div class="episode-description" id="ep1-desc">Не попа́дись на очі</div>
+        </div>
+        <div class="episode" onclick="window.location.href='https://youtube.com'" id="episode2">
+            <img src="https://via.placeholder.com/200x300.png?text=Episode+2" alt=" ">
+            <div class="episode-title" id="ep2-title">Епізод 2</div>
+            <div class="episode-description" id="ep2-desc">Ставки підвищуються, коли гра продовжується...</div>
+        </div>
+        <div class="episode" onclick="window.location.href='https://youtube.com'" id="episode2">
+            <img src="https://via.placeholder.com/200x300.png?text=Episode+3" alt=" ">
+            <div class="episode-title" id="ep3-title">Епізод 3</div>
+            <div class="episode-description" id="ep3-desc">Шокуюча правда розкривається...</div>
+        </div>
+        <div class="episode" onclick="window.location.href='https://youtube.com'" id="episode2">
+            <img src="https://via.placeholder.com/200x300.png?text=Episode+4" alt=" ">
+            <div class="episode-title" id="ep4-title">Епізод 4</div>
+            <div class="episode-description" id="ep4-desc">Останні миті гри...</div>
+        </div>
+    </div>
+
+    <script>
+        let language = 'uk';  // default language is Ukrainian
+
+        // Функція для зміни мови
+        function setLanguage(lang) {
+            language = lang;
+            updateLanguage();
+        }
+
+        // Оновлюємо текст в залежності від вибору мови
+        function updateLanguage() {
+            const movieTitle = document.getElementById('movie-title');
+            const ep1Title = document.getElementById('ep1-title');
+            const ep2Title = document.getElementById('ep2-title');
+            const ep3Title = document.getElementById('ep3-title');
+            const ep4Title = document.getElementById('ep4-title');
+            const ep1Desc = document.getElementById('ep1-desc');
+            const ep2Desc = document.getElementById('ep2-desc');
+            const ep3Desc = document.getElementById('ep3-desc');
+            const ep4Desc = document.getElementById('ep4-desc');
+            const videoElement = document.getElementById('main-video');
+
+            if (language === 'en') {
+                movieTitle.innerText = 'Game in Cancer';
+                ep1Title.innerText = 'Episode 1';
+                ep2Title.innerText = 'Episode 2';
+                ep3Title.innerText = 'Episode 3';
+                ep4Title.innerText = 'Episode 4';
+                ep1Desc.innerText = 'Don\'t Get in My Eyes';
+                ep2Desc.innerText = ' ';
+                ep3Desc.innerText = ' ';
+                ep4Desc.innerText = ' ';
+                
+                // Change video to English version
+                videoElement.src = 'game in cancer sereal/first_epizode english language.mp4';  
+            } else if (language === 'uk') {
+                movieTitle.innerText = 'Гра в рака';
+                ep1Title.innerText = 'Епізод 1';
+                ep2Title.innerText = 'Епізод 2';
+                ep3Title.innerText = 'Епізод 3';
+                ep4Title.innerText = 'Епізод 4';
+                ep1Desc.innerText = 'Не попа́дись на очі';
+                ep2Desc.innerText = ' ';
+                ep3Desc.innerText = ' ';
+                ep4Desc.innerText = ' ';
+                
+                // Change video to Ukrainian version
+                videoElement.src = 'game in cancer sereal/first_epizode.mp4';
+            }
+            videoElement.play();  // Auto-play the video when the language is switched
+        }
+
+        // Встановити початкову мову
+        updateLanguage();
+    </script>
+</body>
+</html>
